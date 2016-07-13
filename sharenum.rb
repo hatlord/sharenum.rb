@@ -27,7 +27,7 @@ class Sharenum
       opt :combo, "Username:Password combo list", :type => String
 
         if ARGV.empty?
-          puts "Need Help? Try ./rsdns --help or -h"
+          puts "Need Help? Try ./sharenum.rb --help or -h"
         exit
       end
     end
