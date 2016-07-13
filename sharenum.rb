@@ -10,11 +10,9 @@ require 'logger'
 class Sharenum
 
   def initialize
-    
     @users = []
     @log = Logger.new('debug.log')
     @cmd = TTY::Command.new(output: @log)
-
   end
 
   def arguments
@@ -35,16 +33,16 @@ class Sharenum
 
   def findshares
     if @@opts[:user]
-      hosts = File.readlines(@@opts[:hosts]).map(&:chomp &&:strip)
+    hosts = File.readlines(@@opts[:hosts]).map(&:chomp &&:strip)
   
     hosts.each do |host|
       out, err = @cmd.run!("enum4linux -u #{@@opts[:user]} -p #{@@opts[:pass]} -S #{host}", timeout: 0.5)
-      if out =~ /Listing: OK/
-        output = out.lines.grep(/Listing: Ok/i)
-        output.each { |out| puts "User: #{@@opts[:user]} #{out}"}
-      else
-        puts "Listing not possible on #{host} with user #{@@opts[:user]}".light_red
-      end
+        if out =~ /Listing: OK/
+          output = out.lines.grep(/Listing: Ok/i)
+          output.each { |out| puts "User: #{@@opts[:user]} #{out}"}
+        else
+          puts "Listing not possible on #{host} with user #{@@opts[:user]}".light_red
+        end
       end
     end
   end
