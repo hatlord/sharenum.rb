@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#Shit user share finder
+#Share permission enumerator - Needs enum4linux. http://github.com/hatlord/sharenum.rb
 
 require 'tty-command'
 require 'colorize'
@@ -26,9 +26,9 @@ class Sharenum
       opt :pass, "Password", :type => String
       opt :combo, "Username:Password combo list", :type => String
 
-        if ARGV.empty?
-          puts "Need Help? Try ./sharenum.rb --help or -h"
-        exit
+      if ARGV.empty?
+        puts "Need Help? Try ./sharenum.rb --help or -h"
+      exit
       end
     end
   end
