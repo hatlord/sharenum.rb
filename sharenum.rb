@@ -39,7 +39,12 @@ class Sharenum
   
     hosts.each do |host|
       out, err = @cmd.run!("enum4linux -u #{@@opts[:user]} -p #{@@opts[:pass]} -S #{host}", timeout: 0.5)
-        puts out.lines.grep(/Listing: Ok/i)
+      if out =~ /Listing: OK/
+        output = out.lines.grep(/Listing: Ok/i)
+        output.each { |out| puts "User: #{@@opts[:user]} #{out}"}
+      else
+        puts "Listing not possible on #{host} with user #{@@opts[:user]}".light_red
+      end
       end
     end
   end
@@ -53,11 +58,12 @@ class Sharenum
         splitter = com.split(':')
           hosts.each do |host|
             out, err = @cmd.run!("enum4linux -u #{splitter[0]} -p #{splitter[1]} -S #{host}", timeout: 0.5)
-              if out =~ /Server doesn't allow session using username/
-                puts "Connection failed for user #{splitter[0]} on host #{host}"
-              end
-            output = out.lines.grep(/Listing: Ok/i)
-            output.each { |e| puts "User: #{splitter[0]} #{e}" }
+              if out =~ /Listing: OK/
+                output = out.lines.grep(/Listing: Ok/i)
+                output.each { |out| puts "User: #{splitter[0]} #{out}"}
+              else
+                puts "Listing not possible on #{host} with user #{splitter[0]}".light_red
+          end
         end
       end
     end
