@@ -56,8 +56,8 @@ class Sharenum
               if out =~ /Server doesn't allow session using username/
                 puts "Connection failed for user #{splitter[0]} on host #{host}"
               end
-              output = out.lines.grep(/Listing: Ok/i)
-              output.each { |e| puts "User: #{splitter[0]} #{e}" }
+            output = out.lines.grep(/Listing: Ok/i)
+            output.each { |e| puts "User: #{splitter[0]} #{e}" }
         end
       end
     end
