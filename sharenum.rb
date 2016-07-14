@@ -79,9 +79,9 @@ class Sharenum
             out, err = @cmd.run!("enum4linux -u #{splitter[0]}/#{splitter[1]} -p #{splitter[2]} -S #{host}", timeout: 0.5)
               if out =~ /Listing: OK/
                 output = out.lines.grep(/Listing: Ok/i)
-                output.each { |out| puts "User: #{splitter[0]} Domain:#{splitter[1]} #{out}"}
+                output.each { |out| puts "User: #{splitter[1]} Domain:#{splitter[0]} #{out}"}
               else
-                puts "Listing not possible on #{host} with user #{splitter[0]} and domain #{splitter[1]}".light_red
+                puts "Listing not possible on #{host} with user #{splitter[1]} and domain #{splitter[0]}".light_red
           end
         end
       end
