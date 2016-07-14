@@ -23,6 +23,7 @@ class Sharenum
       opt :user, "Username", :type => String
       opt :pass, "Password", :type => String
       opt :combo, "Username:Password combo list", :type => String
+      opt :domcombo, "Domain:Username:Password combo list", :type => String
 
       if ARGV.empty?
         puts "Need Help? Try ./sharenum.rb --help or -h"
@@ -67,6 +68,27 @@ class Sharenum
     end
   end
 
+  def domaincombo
+    if @@opts[:domcombo]
+      hosts = File.readlines(@@opts[:hosts]).map(&:chomp &&:strip)
+      combolist = File.readlines(@@opts[:combo]).map(&:chomp &&:strip)
+
+      combolist.each do |com|
+        splitter = com.split(':')
+          hosts.each do |host|
+            out, err = @cmd.run!("enum4linux -u #{splitter[0]}/#{splitter[1]} -p #{splitter[2]} -S #{host}", timeout: 0.5)
+              if out =~ /Listing: OK/
+                output = out.lines.grep(/Listing: Ok/i)
+                output.each { |out| puts "User: #{splitter[0]} Domain:#{splitter[1]} #{out}"}
+              else
+                puts "Listing not possible on #{host} with user #{splitter[0]} and domain #{splitter[1]}".light_red
+          end
+        end
+      end
+    end
+
+  end
+
 end
 
 run = Sharenum.new
@@ -74,3 +96,4 @@ run = Sharenum.new
 run.arguments
 run.findshares
 run.combo
+run.domaincombo
