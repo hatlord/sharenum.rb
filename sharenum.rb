@@ -71,7 +71,7 @@ class Sharenum
   def domaincombo
     if @@opts[:domcombo]
       hosts = File.readlines(@@opts[:hosts]).map(&:chomp &&:strip)
-      combolist = File.readlines(@@opts[:combo]).map(&:chomp &&:strip)
+      combolist = File.readlines(@@opts[:domcombo]).map(&:chomp &&:strip)
 
       combolist.each do |com|
         splitter = com.split(':')
