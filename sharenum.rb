@@ -86,7 +86,6 @@ class Sharenum
         end
       end
     end
-
   end
 
 end
